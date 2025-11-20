@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>월홍 타로 커미션</title>
+  <style>
+    :root {
+      --bg: #060418; /* 전체 배경: 아주 진한 남보라 */
+      --bg-soft: rgba(24, 16, 48, 0.9);
+      --card: rgba(18, 10, 32, 0.95); /* 카드/박스 배경 */
+
+      --accent: #ff6b9c; /* 메인 포인트: 로즈 핑크 */
+      --accent-soft: rgba(255, 107, 156, 0.16);
+
+      --text: #fff7fb; /* 기본 글자색: 부드러운 핑크빛 화이트 */
+      --muted: #f9a8d4; /* 설명글, 서브텍스트 */
+
+      --border: rgba(248, 187, 208, 0.55); /* 테두리 핑크빛 */
+
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Pretendard",
+        "Noto Sans KR", sans-serif;
+      background:
+        radial-gradient(circle at top, #1b1234 0, transparent 50%),
+        radial-gradient(circle at bottom, #020013 0, #020013 60%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* 헤더 */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(6, 4, 24, 0.96),
+        rgba(6, 4, 24, 0.75),
+        transparent
+      );
+      border-bottom: 1px solid rgba(248, 187, 208, 0.4);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo span {
+      font-size: 1.3rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      opacity: 0.85;
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      background-color: rgba(24, 16, 48, 0.95);
+    }
+
+    .nav-cta {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 107, 156, 0.2),
+        rgba(236, 72, 153, 0.15)
+      );
+      font-size: 0.9rem;
+      display: none;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* 섹션 공통 */
+
+    section {
+      padding: 80px 0;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 90px 0 80px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 2.4rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #fecaca, #ff6b9c, #f472b6);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 0.98rem;
+      margin-bottom: 24px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 187, 208, 0.5);
+      background-color: rgba(18, 10, 32, 0.95);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fb7185, #be123c);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      background: linear-gradient(135deg, var(--accent), #f973c9);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(190, 24, 93, 0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 0.9rem;
+      background-color: rgba(18, 10, 32, 0.95);
+      border: 1px solid rgba(248, 187, 208, 0.5);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      padding: 20px 18px;
+      background: radial-gradient(circle at top, #30122b, #090014 80%);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(248, 187, 208, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(244, 114, 182, 0.14), transparent),
+        radial-gradient(circle at 90% 100%, rgba(248, 187, 208, 0.16), transparent);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .hero-card-title {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-card-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .mini-card {
+      border-radius: 14px;
+      padding: 10px;
+      background-color: rgba(18, 10, 32, 0.98);
+      border: 1px solid rgba(248, 187, 208, 0.55);
+      font-size: 0.78rem;
+    }
+
+    .mini-card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+    }
+
+    .mini-card-text {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding-top: 8px;
+      border-top: 1px dashed rgba(248, 187, 208, 0.7);
+      margin-top: 4px;
+    }
+
+    /* 소개 섹션 */
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 28px;
+    }
+
+    .about-card {
+      background-color: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .about-tag {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .about-name {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .about-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .about-list {
+      font-size: 0.85rem;
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .about-list li {
+      margin-bottom: 6px;
+    }
+
+    .about-highlight {
+      font-size: 0.85rem;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      background-color: rgba(18, 10, 32, 0.98);
+      border: 1px dashed rgba(255, 107, 156, 0.9);
+    }
+
+    /* 가격표 */
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .price-card {
+      background-color: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-badge {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background-color: var(--accent-soft);
+      border: 1px solid rgba(255, 107, 156, 0.8);
+    }
+
+    .price-title {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .price-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+      min-height: 40px;
+    }
+
+    .price-value {
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+    }
+
+    .price-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .price-small {
+      font-size: 0.7rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    /* 프로세스 */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      font-size: 0.82rem;
+    }
+
+    .step-card {
+      background-color: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 14px 12px;
+      border: 1px solid var(--border);
+    }
+
+    .step-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 107, 156, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+    }
+
+    .step-title {
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+    }
+
+    .step-text {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    /* 유의사항 / FAQ */
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr;
+      gap: 18px;
+    }
+
+    .block-card {
+      background-color: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px;
+      border: 1px solid var(--border);
+      font-size: 0.84rem;
+    }
+
+    .block-card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .block-card ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .block-card li {
+      margin-bottom: 6px;
+    }
+
+    .tos-small {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .faq-item {
+      margin-bottom: 10px;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      font-size: 0.86rem;
+    }
+
+    .faq-a {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* 신청 섹션 */
+
+    .request-card {
+      background: radial-gradient(circle at top, rgba(255, 107, 156, 0.22), rgba(18, 10, 32, 0.97));
+      border-radius: var(--radius-xl);
+      padding: 22px 18px;
+      border: 1px solid rgba(255, 107, 156, 0.8);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .request-title {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .request-text {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .request-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .request-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .link-chip {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 187, 208, 0.8);
+      background-color: rgba(18, 10, 32, 0.98);
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 푸터 */
+
+    footer {
+      padding: 30px 0 40px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(248, 187, 208, 0.4);
+      background: linear-gradient(to top, rgba(10, 6, 28, 0.98), transparent);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* 반응형 */
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 80px;
+      }
+
+      .hero-card {
+        order: -1;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        display: inline-flex;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .steps {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 헤더 -->
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <span>🌙</span> 월홍 타로
+      </div>
+      <nav class="nav-links">
+        <a href="#about">소개</a>
+        <a href="#pricing">예약·요금</a>
+        <a href="#process">진행 방식</a>
+        <a href="#faq">안내사항</a>
+      </nav>
+      <button class="nav-cta" onclick="goToRequest()">
+        커미션 신청
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span> 월홍타로 예약 안내
+          </div>
+          <h1 class="hero-title">
+            <span>월홍 타로 커미션</span><br />
+            달빛 아래에서 듣는 나의 이야기
+          </h1>
+          <p class="hero-text">
+            타로는 미래를 단정 짓기보다는,<br />
+            지금의 나와 선택의 방향을 비춰주는 작은 달빛이라고 믿어요.<br />
+            당신의 마음이 너무 외롭지 않도록, 조심스럽게 함께 읽어 드릴게요.
+          </p>
+
+          <div class="hero-badges">
+            <div class="badge">카카오톡 채팅 상담</div>
+            <div class="badge">15·20·30분 실시간 상담</div>
+            <div class="badge">개별 질문형 상담 가능</div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="goToRequest()">
+              ✉ 카카오톡으로 예약하기
+            </button>
+            <button class="btn-secondary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">
+              요금·메뉴 보기
+            </button>
+          </div>
+          <div class="hero-note">
+            상담 가능 시간 : 오후 1시 ~ 오전 1시 · 카카오톡 채널로 예약 후 진행됩니다.
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="hero-card-title">
+            월홍타로 예약 안내 🌙
+          </div>
+          <div class="hero-card-sub">
+            카카오톡 채널을 통해 예약 및 상담 문의를 받고 있습니다.
+          </div>
+
+          <div class="hero-grid">
+            <div class="mini-card">
+              <div class="mini-card-title">예약제 진행</div>
+              <div class="mini-card-text">
+                모든 상담은 100% 예약제로 진행되며,<br />
+                일정에 따라 당일 상담 예약도 가능합니다.
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">선입금 후 상담</div>
+              <div class="mini-card-text">
+                예약 확정 후 안내드리는 계좌로 선입금 확인이 되면<br />
+                약속된 시간에 상담을 시작합니다.
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">비밀 보장</div>
+              <div class="mini-card-text">
+                모든 상담 내용은 제3자에게 공유되지 않으며,<br />
+                비밀을 원칙으로 진행됩니다.
+              </div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-title">환불 안내</div>
+              <div class="mini-card-text">
+                상담이 이미 진행된 후에는<br />
+                환불이 어려운 점 양해 부탁드립니다.
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-meta">
+            <span>진행 채널 : 카카오톡 채널</span>
+            <span>예약 단위 : 15/20/30분 & 개별 질문</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 소개 -->
+    <section id="about">
+      <div class="container">
+        <h2>리더 소개</h2>
+        <p class="section-subtitle">
+          달빛 아래에서, 당신의 이야기를 조용히 들어주는 사람.
+        </p>
+
+        <div class="about-layout">
+          <div class="about-card">
+            <div class="about-tag">Tarot Reader · 월홍</div>
+            <div class="about-name">월홍(月紅)</div>
+            <div class="about-note">
+              바다와 노을, 달빛을 좋아하는 타로 리더 월홍입니다.<br />
+              내 마음이 어디쯤 와 있는지, 앞으로 어디로 걸어가면 좋을지<br />
+              카드와 함께 조심스럽게 짚어 드리고 있어요.
+            </div>
+            <ul class="about-list">
+              <li>상담 방식 : 카카오톡 채팅 상담 위주</li>
+              <li>주요 분야 : 연애, 인간관계, 진로·학업, 마음 정리</li>
+              <li>메뉴 : 실시간 채팅 상담(분당) & 개별 질문 상담</li>
+            </ul>
+            <div class="about-highlight">
+              💬 리딩 스타일<br />
+              · 무조건 좋은 말만 하기보다는, 현실적인 부분도 함께 짚어 드립니다.<br />
+              · 다만, 내 마음이 더 다치지 않도록 부드러운 톤을 유지하려 노력합니다.
+            </div>
+          </div>
+
+          <div class="about-card">
+            <div class="about-tag">상담 안내</div>
+            <ul class="about-list">
+              <li>상담 진행 : 카카오톡 채널 1:1 채팅</li>
+              <li>상담 가능 시간 : 오후 1시 ~ 오전 1시</li>
+              <li>예약 방법 : 아래 예약 양식에 맞추어 메시지 전송</li>
+              <li>예약 확정 : 시간 조율 후 입금 확인 시 최종 확정</li>
+            </ul>
+            <div class="about-highlight">
+              📌 예약 시 함께 보내주세요<br />
+              · 원하시는 날짜 / 요일 / 시간<br />
+              · 상담받고 싶은 메뉴 (15·20·30분 / 개별질문)<br />
+              · 간단한 상황 설명
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 가격 / 옵션 -->
+    <section id="pricing">
+      <div class="container">
+        <h2>예약 · 요금 안내</h2>
+        <p class="section-subtitle">
+          월홍타로는 분당 상담과 개별 질문 상담으로 진행됩니다.
+        </p>
+
+        <div class="cards-grid">
+          <div class="price-card">
+            <div class="price-badge">Chat</div>
+            <div class="price-title">15분 채팅 상담</div>
+            <div class="price-desc">
+              짧고 굵게 핵심만 보고 싶은 분들을 위한<br />
+              실시간 채팅 상담입니다.
+            </div>
+            <div class="price-value">10,000원</div>
+            <div class="price-meta">
+              · 카카오톡 실시간 상담 15분<br />
+              · 1~2가지 질문 위주로 진행
+            </div>
+            <div class="price-small">
+              *현재 상황을 빠르게 점검하고 싶을 때 추천
+            </div>
+          </div>
+
+          <div class="price-card">
+            <div class="price-badge">Chat</div>
+            <div class="price-title">20분 채팅 상담</div>
+            <div class="price-desc">
+              조금 더 여유 있게 상황을 나누며,<br />
+              카드 흐름을 함께 정리하는 상담입니다.
+            </div>
+            <div class="price-value">15,000원</div>
+            <div class="price-meta">
+              · 카카오톡 실시간 상담 20분<br />
+              · 2~3가지 질문 가능
+            </div>
+            <div class="price-small">
+              *연애·관계 등 이야기 나눌 내용이 많은 경우에 좋아요
+            </div>
+          </div>
+
+          <div class="price-card">
+            <div class="price-badge">Chat</div>
+            <div class="price-title">30분 채팅 상담</div>
+            <div class="price-desc">
+              여러 가지 고민을 함께 풀어보고 싶은 분들을 위한,<br />
+              넉넉한 시간의 상담입니다.
+            </div>
+            <div class="price-value">20,000원</div>
+            <div class="price-meta">
+              · 카카오톡 실시간 상담 30분<br />
+              · 상황 정리 + 방향성까지 충분히 대화
+            </div>
+            <div class="price-small">
+              *연애·진로·가족 등 복합적인 고민이 있을 때 추천
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:28px;">
+          <div class="about-card">
+            <div class="about-tag">개별 질문 상담</div>
+            <p class="about-note">
+              실시간 상담이 부담스럽거나, 문장으로 정리된 답변을 받고 싶은 분들을 위한 메뉴입니다.
+            </p>
+            <ul class="about-list">
+              <li>개별 질문 1문항 : <strong>5,000원</strong></li>
+              <li>카드 리딩 후, 정리된 텍스트 답변으로 전달됩니다.</li>
+              <li>질문이 여러 개일 경우, 문항 수에 따라 금액이 달라집니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 진행 방식 -->
+    <section id="process">
+      <div class="container">
+        <h2>진행 방식</h2>
+        <p class="section-subtitle">
+          처음 예약 메시지를 보내는 순간부터, 상담이 끝날 때까지의 흐름입니다.
+        </p>
+
+        <div class="steps">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-title">예약 메시지 전송</div>
+            <div class="step-text">
+              카카오톡 채널로<br />
+              예약 양식에 맞춰 메시지를 보내 주세요.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-title">시간 조율 · 확정</div>
+            <div class="step-text">
+              가능한 시간대를 서로 조율한 후,<br />
+              상담 날짜와 시간을 확정합니다.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-title">선입금 확인</div>
+            <div class="step-text">
+              안내드린 계좌로 입금이 확인되면<br />
+              예약이 최종 확정됩니다.
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-title">상담 진행</div>
+            <div class="step-text">
+              약속된 시간에 카카오톡으로 접속해<br />
+              정해진 분량만큼 상담을 진행합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 유의사항 & FAQ -->
+    <section id="faq">
+      <div class="container">
+        <h2>안내사항 & FAQ</h2>
+        <p class="section-subtitle">
+          예약 전 한 번만 천천히 읽어 주시면 감사해요.
+        </p>
+
+        <div class="two-column">
+          <div class="block-card">
+            <h3>예약·취소·비밀 보장 안내</h3>
+            <ul>
+              <li>모든 상담은 100% 예약제로만 진행됩니다.</li>
+              <li>당일 상담도 가능하지만, 시간대에 따라 마감될 수 있습니다.</li>
+              <li>선입금 후 상담이 진행되며, 상담이 모두 끝난 후에는 환불이 불가합니다.</li>
+              <li>모든 상담 내용은 비밀을 원칙으로 하며, 제3자에게 공유하지 않습니다.</li>
+            </ul>
+            <div class="tos-small">
+              *예약 시간 24시간 전까지의 변경·취소는 채널로 미리 연락 부탁드립니다.
+            </div>
+          </div>
+
+          <div class="block-card">
+            <h3>자주 받는 질문</h3>
+            <div class="faq-item">
+              <div class="faq-q">Q. 어떤 질문이 가능한가요?</div>
+              <div class="faq-a">
+                A. 연애, 인간관계, 진로·학업, 마음 정리 등 일상적인 고민은 대부분 가능합니다.<br />
+                다만 의료·법률·투자, 제3자의 사생활을 심하게 침해하는 질문은 진행이 어렵습니다.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">Q. 상담 시간이 조금 넘으면 어떻게 되나요?</div>
+              <div class="faq-a">
+                A. 마무리 멘트 정도는 여유를 두지만, 크게 초과되는 경우<br />
+                추가 결제가 필요할 수 있어 미리 안내드릴게요.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">Q. 개별 질문 상담이랑 채팅 상담은 뭐가 달라요?</div>
+              <div class="faq-a">
+                A. 개별 질문은 질문 1문항당 카드 리딩 후,<br />
+                정리된 답변만 받아보는 방식입니다.<br />
+                채팅 상담은 그 자리에서 서로 대화를 주고받으며 진행됩니다.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 신청 섹션 -->
+    <section id="request">
+      <div class="container">
+        <div class="request-card">
+          <div class="request-title">월홍타로 예약 양식</div>
+          <div class="request-text">
+            아래 양식대로 작성해 카카오톡 채널로 보내 주시면,<br />
+            가능한 시간 확인 후 순서대로 답장 드립니다.
+          </div>
+
+          <div class="about-card" style="margin:16px auto 14px; max-width:520px;">
+            <div class="about-tag">예약 방법</div>
+            <ul class="about-list">
+              <li>① 날짜 · 요일</li>
+              <li>② 희망 시간 (예: 오후 3시, 밤 10시 등)</li>
+              <li>③ 상담 메뉴 (15분 / 20분 / 30분 / 개별 질문)</li>
+              <li>④ 간단한 상황 설명</li>
+            </ul>
+            <p class="about-highlight" style="margin-top:12px;">
+              상담 가능 시간 : <strong>오후 1시 ~ 오전 1시</strong><br />
+              문의는 프로필에 있는 카카오톡 채널을 통해 부탁드립니다.
+            </p>
+          </div>
+
+          <button class="btn-primary" onclick="goToMainRequest()">
+            ✉ 카카오톡 채널 열기
+          </button>
+
+          <div class="request-links">
+            <!-- 여기 링크를 실제 카카오톡 채널 / 인스타 등으로 교체 -->
+            <a class="link-chip" href="[https://pf.kakao.com/_xbxoxcKxj]" target="_blank" rel="noopener">
+              💬 카카오톡 채널 바로가기
+            </a>
+          </div>
+
+          <div class="request-note">
+            * 예약 후 순차적으로 답변을 드리며, 늦은 밤·새벽 시간에는 답장이 다소 지연될 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        © <span id="year"></span> 월홍 타로. All rights reserved.
+      </div>
+      <div>
+        제작 : 월홍🌙 · 문의 : 카카오톡 채널 「월홍타로」
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 올해 연도 자동 표시
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 상단 버튼에서 신청 섹션으로 이동
+    function goToRequest() {
+      document.getElementById("request").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // 메인 신청 버튼 (예: 카카오톡 채널 링크)
+    function goToMainRequest() {
+      // 여기에 실제 카카오톡 채널 링크 넣기
+      window.open("[https://pf.kakao.com/_xbxoxcKxj]", "_blank");
+    }
+  </script>
+</body>
+</html>
